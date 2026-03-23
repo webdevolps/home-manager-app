@@ -1,0 +1,66 @@
+
+> home-manager-app@0.1.0 test:coverage
+> vitest run --coverage
+
+
+ RUN  v3.2.4 /home/klyswer/Escritorio/PROYECTS/home-manager-app
+      Coverage enabled with v8
+
+ ✓ __tests__/components/atoms/Greeting.test.tsx (2 tests) 116ms
+ ✓ __tests__/components/ExceptionPage.test.tsx (1 test) 312ms
+   ✓ ExceptionPage > renders 404 and error message  304ms
+ ✓ __tests__/store/ModalContext.test.tsx (2 tests) 284ms
+ ✓ __tests__/components/HomeApp.test.tsx (2 tests) 318ms
+ ✓ __tests__/components/AppRouter.test.tsx (2 tests) 282ms
+ ✓ __tests__/components/PublicRoute.test.tsx (3 tests) 215ms
+ ✓ __tests__/components/PrivateRoute.test.tsx (3 tests) 204ms
+ ✓ __tests__/store/store.test.ts (2 tests) 7ms
+ ✓ __tests__/services/api.client.test.ts (2 tests) 5ms
+
+ Test Files  9 passed (9)
+      Tests  19 passed (19)
+   Start at  19:13:58
+   Duration  5.96s (transform 525ms, setup 1.57s, collect 3.19s, tests 1.74s, environment 13.36s, prepare 2.58s)
+
+ % Coverage report from v8
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   51.69 |    78.78 |   68.18 |   51.69 |                   
+ home-manager-app  |       0 |        0 |       0 |       0 |                   
+  .eslintrc.cjs    |       0 |        0 |       0 |       0 | 1-19              
+  ...css.config.js |       0 |        0 |       0 |       0 | 1-6               
+  ...ind.config.js |       0 |        0 |       0 |       0 | 1-11              
+  vite.config.ts   |       0 |        0 |       0 |       0 | 1-26              
+  vitest.config.ts |       0 |        0 |       0 |       0 | 1-23              
+ ...-app/__tests__ |     100 |      100 |     100 |     100 |                   
+  test-utils.tsx   |     100 |      100 |     100 |     100 |                   
+ ...pp/dist/assets |       0 |        0 |       0 |       0 |                   
+  ...x-BHpgAuuc.js |       0 |        0 |       0 |       0 | 1-68              
+ ...anager-app/src |       0 |        0 |       0 |       0 |                   
+  vite-env.d.ts    |       0 |        0 |       0 |       0 | 1                 
+ ...pp/src/context |     100 |      100 |     100 |     100 |                   
+  ModalContext.tsx |     100 |      100 |     100 |     100 |                   
+ ...ks/transversal |     100 |      100 |     100 |     100 |                   
+  useAuth.ts       |     100 |      100 |     100 |     100 |                   
+ ...cture/services |   57.14 |      100 |     100 |   57.14 |                   
+  api.client.ts    |   57.14 |      100 |     100 |   57.14 | 11-16             
+ ...-app/src/store |     100 |      100 |     100 |     100 |                   
+  index.ts         |     100 |      100 |     100 |     100 |                   
+  store.ts         |     100 |      100 |     100 |     100 |                   
+ ...atoms/Greeting |     100 |      100 |     100 |     100 |                   
+  Greeting.tsx     |     100 |      100 |     100 |     100 |                   
+ ...components/hoc |     100 |      100 |     100 |     100 |                   
+  PrivateRoute.tsx |     100 |      100 |     100 |     100 |                   
+  PublicRoute.tsx  |     100 |      100 |     100 |     100 |                   
+ .../pages/HomeApp |     100 |      100 |     100 |     100 |                   
+  index.tsx        |     100 |      100 |     100 |     100 |                   
+ ...ages/exception |     100 |      100 |     100 |     100 |                   
+  index.tsx        |     100 |      100 |     100 |     100 |                   
+ .../src/ui/routes |     100 |      100 |     100 |     100 |                   
+  AppRouter.tsx    |     100 |      100 |     100 |     100 |                   
+-------------------|---------|----------|---------|---------|-------------------
+ERROR: Coverage for lines (51.69%) does not meet global threshold (90%)
+ERROR: Coverage for functions (68.18%) does not meet global threshold (90%)
+ERROR: Coverage for statements (51.69%) does not meet global threshold (90%)
+ERROR: Coverage for branches (78.78%) does not meet global threshold (90%)
