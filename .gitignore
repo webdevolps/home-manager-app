@@ -1,0 +1,13 @@
+node_modules
+.env
+
+
+
+.env
+dist
+
+.claude
+CLAUDE.md
+
+config.firebase.credentials.md
+/coverage
