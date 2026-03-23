@@ -19,7 +19,7 @@ module.exports = {
     {
       files: ['__tests__/**/*.ts', '__tests__/**/*.tsx'],
       rules: {
-        '@typescript-eslint/no-explicit-any': 'warn',
+        '@typescript-eslint/no-explicit-any': 'off',
         'sonarjs/no-duplicate-string': 'off',
       },
     },
