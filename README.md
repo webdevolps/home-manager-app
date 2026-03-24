@@ -53,7 +53,6 @@ La seguridad no es el último paso, es el primero. Hemos integrado protecciones 
 - **Vitest + Testing Library** (Estrategia de pruebas)
 - **Husky + Commitlint** (Gobernanza de Git)
 
-
 ---
 
 ## 🏁 Inicio Rápido
