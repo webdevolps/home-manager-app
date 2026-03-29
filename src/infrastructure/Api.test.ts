@@ -1,6 +1,15 @@
 import { describe, it, expect, vi } from 'vitest'
 import ApiImpl from '@/infrastructure/Api'
 import axios from 'axios'
+import { store } from '@/store/store'
+import { logout } from '@/store/auth/authSlice'
+
+vi.mock('@/store/store', () => ({
+  store: {
+    getState: vi.fn(),
+    dispatch: vi.fn()
+  }
+}))
 
 vi.mock('axios', () => ({
   default: {
@@ -11,6 +20,10 @@ vi.mock('axios', () => ({
       patch: vi.fn(),
       delete: vi.fn(),
       postForm: vi.fn(),
+      interceptors: {
+        request: { use: vi.fn() },
+        response: { use: vi.fn() },
+      },
     })),
   },
 }))
@@ -41,7 +54,8 @@ describe('ApiImpl', () => {
     await tasks.getId({ id: 1 })
     expect(mockInstance.get).toHaveBeenCalledWith(`${baseUrl}/1`, {})
 
-    await tasks.getAll({ query: { page: 1 } })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await tasks.getAll({ query: { page: 1 } as any })
     expect(mockInstance.get).toHaveBeenCalledWith(baseUrl, { params: { page: 1 } })
 
     await tasks.create({ toCreate: { name: 'new' } })
@@ -66,5 +80,69 @@ describe('ApiImpl', () => {
     const endpoints = api2.getEndpoints()
     expect(endpoints.a).toBeDefined()
     expect(endpoints.b).toBeDefined()
+  })
+
+  // Interceptor Tests
+  it('should inject token and X-Tenant-ID from Redux Store into the request', async () => {
+    const mockState = {
+      _placeholder: {},
+      auth: { token: 'redux-token-123', currentTenantId: 'tenant-456', user: null, isAuthenticated: true }
+    }
+    vi.mocked(store.getState).mockReturnValue(mockState)
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const mockInstance = (axios.create as any).mock.results[0].value
+    const requestInterceptor = mockInstance.interceptors.request.use.mock.calls[0][0]
+    const config = await requestInterceptor({ headers: {} })
+
+    expect(config.headers.Authorization).toBe('Bearer redux-token-123')
+    expect(config.headers['X-Tenant-ID']).toBe('tenant-456')
+  })
+
+  it('should fallback to localStorage token if Redux token is absent', async () => {
+    vi.mocked(store.getState).mockReturnValue({
+      _placeholder: {},
+      auth: { token: null, currentTenantId: null, user: null, isAuthenticated: false }
+    })
+    localStorage.setItem('token', 'local-token-999')
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const mockInstance = (axios.create as any).mock.results[0].value
+    const requestInterceptor = mockInstance.interceptors.request.use.mock.calls[0][0]
+    const config = await requestInterceptor({ headers: {} })
+
+    expect(config.headers.Authorization).toBe('Bearer local-token-999')
+    expect(config.headers['X-Tenant-ID']).toBeUndefined()
+  })
+
+  it('should not inject headers if neither token nor tenant are present', async () => {
+    vi.mocked(store.getState).mockReturnValue({
+      _placeholder: {},
+      auth: { token: null, currentTenantId: null, user: null, isAuthenticated: false }
+    })
+    localStorage.removeItem('token')
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const mockInstance = (axios.create as any).mock.results[0].value
+    const requestInterceptor = mockInstance.interceptors.request.use.mock.calls[0][0]
+    const config = await requestInterceptor({ headers: {} })
+
+    expect(config.headers.Authorization).toBeUndefined()
+    expect(config.headers['X-Tenant-ID']).toBeUndefined()
+  })
+
+  it('should dispatch global logout when response is 401 Unauthorized', async () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const mockInstance = (axios.create as any).mock.results[0].value
+    const responseInterceptor = mockInstance.interceptors.response.use.mock.calls[0][1]
+    const errorWith401 = { response: { status: 401 } }
+
+    try {
+      await responseInterceptor(errorWith401)
+    } catch {
+      // Ignoramos la promesa rechazada intencionalmente
+    }
+
+    expect(store.dispatch).toHaveBeenCalledWith(logout())
   })
 })

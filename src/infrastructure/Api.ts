@@ -1,4 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import { store } from "@/store/store";
+import { logout } from "@/store/auth/authSlice";
 
 export interface IEntity {
   name: string;
@@ -49,7 +51,34 @@ class ApiImpl implements IApi {
 
   private createAxiosConfig() {
     this.axiosInstance = axios.create();
-    // Interceptors can be added here as in sysec-front
+    
+    // Interceptores de petición: Configura Token y Tenant-ID
+    this.axiosInstance.interceptors.request.use((config) => {
+      const state = store.getState();
+      const token = state?.auth?.token || localStorage.getItem('token');
+      const tenantId = state?.auth?.currentTenantId;
+
+      if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      
+      if (tenantId && config.headers) {
+        config.headers['X-Tenant-ID'] = tenantId;
+      }
+      
+      return config;
+    }, (error) => Promise.reject(error));
+
+    // Interceptor global de respuesas 401
+    this.axiosInstance.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error.response?.status === 401) {
+          store.dispatch(logout());
+        }
+        return Promise.reject(error);
+      }
+    );
   }
 
   public createEntity(entity: IEntity) {
