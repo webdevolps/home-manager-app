@@ -16,6 +16,7 @@ describe('API Client', () => {
     
     // We need to trigger a request to run the interceptor
     // Since we are using axios instance, we can check the handlers
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const interceptor = (apiClient.interceptors.request as any).handlers[0]
     const config = await interceptor.fulfilled({ headers: {} })
     
@@ -25,6 +26,7 @@ describe('API Client', () => {
 
   it('should not add Authorization header if token does not exist', async () => {
     localStorage.removeItem('token')
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const interceptor = (apiClient.interceptors.request as any).handlers[0]
     const config = await interceptor.fulfilled({ headers: {} })
     

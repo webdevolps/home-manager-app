@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import '@testing-library/jest-dom'
 import { screen } from '@testing-library/react'
-import { renderWithProviders } from '../test-utils'
+import { renderWithProviders } from '@utils/test-utils'
 import HomeApp from '@/ui/pages/HomeApp'
 
 describe('HomeApp Page', () => {
