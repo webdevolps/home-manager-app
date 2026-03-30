@@ -5,15 +5,14 @@ import { renderWithProviders } from '@utils/test-utils'
 import HomeApp from '@/ui/pages/HomeApp'
 
 describe('HomeApp Page', () => {
-  it('renders title and greeting', () => {
+  it('renders title', () => {
     renderWithProviders(<HomeApp />)
     expect(screen.getByRole('heading', { name: /^Home Manager$/i })).toBeInTheDocument()
-    expect(screen.getByText(/Your smart home dashboard/i)).toBeInTheDocument()
   })
 
-  it('contains Architecture and Tech Stack sections', () => {
+  it('contains LoginForm for authentication', () => {
     renderWithProviders(<HomeApp />)
-    expect(screen.getByRole('heading', { name: /^Architecture$/i })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: /^Tech Stack$/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /^Bienvenido a Agnes$/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /Iniciar Sesión/i })).toBeInTheDocument()
   })
 })

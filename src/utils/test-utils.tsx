@@ -5,6 +5,8 @@ import { Provider } from 'react-redux'
 import type { AppStore, RootState } from '@/store/store'
 import { configureStore } from '@reduxjs/toolkit'
 
+import authReducer from '../store/auth/authSlice'
+
 // Re-define AppStore type if needed to allow creating a fresh store for tests
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: Partial<RootState>
@@ -19,9 +21,11 @@ export function renderWithProviders(
     store = configureStore({
       reducer: {
         _placeholder: (state: Record<string, unknown> = {}) => state,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        auth: authReducer as any
       },
       preloadedState,
-    }),
+    }) as unknown as AppStore,
     ...renderOptions
   }: ExtendedRenderOptions = {}
 ) {

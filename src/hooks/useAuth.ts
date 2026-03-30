@@ -9,8 +9,7 @@ export const useAuth = () => {
   const authState = useSelector((state: RootState) => state.auth);
 
   const loginUser = (authData: AuthResponse) => {
-    // Almacenamos el tenant_id en el store global como solicitaste,
-    // extrayéndolo de la respuesta del backend
+    // Almacenamos el tenant_id en el store global como solicitaste, extrayéndolo de la respuesta del backend
     dispatch(
       setCredentials({
         user: authData.user,
@@ -30,6 +29,7 @@ export const useAuth = () => {
     token: authState?.token,
     currentTenantId: authState?.currentTenantId,
     isAuthenticated: authState?.isAuthenticated,
+    isLoading: false, // Stub sync load
 
     // Acciones/Funciones
     loginUser,

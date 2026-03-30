@@ -5,13 +5,13 @@ import { MemoryRouter, Routes, Route } from 'react-router-dom'
 import PrivateRoute from '@/ui/components/hoc/PrivateRoute'
 import React from 'react'
 
-import { useAuth } from '@/hooks/transversal/useAuth'
+import { useAuth } from '@/hooks/useAuth'
 
-vi.mock('@/hooks/transversal/useAuth')
+vi.mock('@/hooks/useAuth')
 
 describe('PrivateRoute HOC', () => {
   it('renders loading state', () => {
-    vi.mocked(useAuth).mockReturnValue({ isAuthenticated: false, isLoading: true, canQuote: false })
+    vi.mocked(useAuth).mockReturnValue({ isAuthenticated: false, isLoading: true, loginUser: vi.fn(), logoutUser: vi.fn(), user: null, token: null, currentTenantId: null })
     render(
       <MemoryRouter>
         <PrivateRoute>
@@ -23,7 +23,7 @@ describe('PrivateRoute HOC', () => {
   })
 
   it('redirects to login when not authenticated', () => {
-    vi.mocked(useAuth).mockReturnValue({ isAuthenticated: false, isLoading: false, canQuote: false })
+    vi.mocked(useAuth).mockReturnValue({ isAuthenticated: false, isLoading: false, loginUser: vi.fn(), logoutUser: vi.fn(), user: null, token: null, currentTenantId: null })
     render(
       <MemoryRouter initialEntries={['/private']}>
         <Routes>
@@ -43,7 +43,7 @@ describe('PrivateRoute HOC', () => {
   })
 
   it('renders children when authenticated', () => {
-    vi.mocked(useAuth).mockReturnValue({ isAuthenticated: true, isLoading: false, canQuote: true })
+    vi.mocked(useAuth).mockReturnValue({ isAuthenticated: true, isLoading: false, loginUser: vi.fn(), logoutUser: vi.fn(), user: null, token: null, currentTenantId: null })
     render(
       <MemoryRouter>
         <PrivateRoute>
