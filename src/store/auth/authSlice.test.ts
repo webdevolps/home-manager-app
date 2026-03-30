@@ -1,4 +1,14 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { SecureStorage } from '../../utils/secureStorage';
+
+vi.mock('../../utils/secureStorage', () => ({
+  SecureStorage: {
+    setItem: vi.fn(),
+    getItem: vi.fn(),
+    removeItem: vi.fn(),
+  }
+}));
+
 import authReducer, { setCredentials, logout } from './authSlice';
 
 describe('authSlice Redux State', () => {
@@ -9,7 +19,15 @@ describe('authSlice Redux State', () => {
     isAuthenticated: false,
   };
 
-  it('Debería retornar el estado inicial', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it('Debería retornar el estado inicial por defecto cuando localStorage está vacío', () => {
     expect(authReducer(undefined, { type: 'unknown' })).toEqual(initialState);
   });
 
@@ -27,6 +45,10 @@ describe('authSlice Redux State', () => {
     expect(actual.token).toEqual(mockToken);
     expect(actual.currentTenantId).toEqual(mockTenantId);
     expect(actual.isAuthenticated).toEqual(true);
+
+    expect(SecureStorage.setItem).toHaveBeenCalledWith('token', mockToken);
+    expect(SecureStorage.setItem).toHaveBeenCalledWith('user', JSON.stringify(mockUser));
+    expect(SecureStorage.setItem).toHaveBeenCalledWith('tenant_id', mockTenantId);
   });
 
   it('Debería manejar la acción logout correctamente y resetear el estado', () => {
@@ -37,8 +59,12 @@ describe('authSlice Redux State', () => {
       isAuthenticated: true,
     };
 
-    const actual = authReducer(loggedInState, logout());
+    const actual = authReducer(loggedInState as any, logout());
 
     expect(actual).toEqual(initialState);
+
+    expect(SecureStorage.removeItem).toHaveBeenCalledWith('token');
+    expect(SecureStorage.removeItem).toHaveBeenCalledWith('user');
+    expect(SecureStorage.removeItem).toHaveBeenCalledWith('tenant_id');
   });
 });

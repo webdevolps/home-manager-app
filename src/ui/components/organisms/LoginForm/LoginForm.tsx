@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useLocation } from 'react-router-dom';
 import { FormField } from '../../molecules/FormField/FormField';
 import { Button } from '../../atoms/Button/Button';
 import { useAuth } from '../../../../hooks/useAuth';
@@ -26,7 +27,17 @@ type LoginFormData = {
 export const LoginForm: React.FC = () => {
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LoginFormData>();
   const { loginUser } = useAuth();
+  const location = useLocation();
   const [globalError, setGlobalError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (location.state?.requireLogin) {
+      setGlobalError('La sesión ha expirado o se requiere iniciar sesión para acceder.');
+      // Limpiar el estate del history explícitamente es opcional, 
+      // pero evitamos que un F5 del usuario estando aquí mantenga el mensaje indefinidamente.
+      window.history.replaceState({}, '');
+    }
+  }, [location]);
 
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
     setGlobalError(null);

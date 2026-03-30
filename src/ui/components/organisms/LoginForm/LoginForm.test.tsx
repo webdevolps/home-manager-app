@@ -96,4 +96,12 @@ describe('LoginForm Organism', () => {
       expect(globalState.auth.currentTenantId).toBe(TEST_TENANT_ID);
     });
   });
+
+  it('renderiza la alerta de requireLogin de React Router si se inyectó un estado de expulsión', () => {
+    renderWithProviders(<LoginForm />, {
+      initialEntries: [{ pathname: '/login', state: { requireLogin: true } }]
+    });
+
+    expect(screen.getByRole('alert')).toHaveTextContent(/La sesión ha expirado o se requiere iniciar sesión/i);
+  });
 });

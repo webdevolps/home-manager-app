@@ -17,6 +17,9 @@ export const AuthService = {
     const useMock = import.meta.env.VITE_USE_MOCK === 'true';
 
     if (useMock) {
+      const { usersMock } = await import('../mocks/users.mock');
+      const { tenantsMock } = await import('../mocks/tenants.mock');
+
       // PROCESO MOCK
       return new Promise<AuthResponse>((resolve, reject) => {
         setTimeout(() => {
@@ -25,18 +28,27 @@ export const AuthService = {
             return;
           }
 
+          const matchedUser = usersMock.find(u => u.email === credentials?.email);
+          
+          if (!matchedUser) {
+            reject(new Error('Credenciales inválidas'));
+            return;
+          }
+
+          const matchedTenant = tenantsMock.find(t => t.id === matchedUser.tenant_id);
+
           resolve({
             user: {
-              id: 'usr-admin-001',
-              email: (credentials?.email as string) || 'admin@agnes.com',
-              name: 'Super Usuario',
-              tenant_id: 'tenant-uuid-12345'
+              id: matchedUser.id,
+              email: matchedUser.email,
+              name: matchedUser.name,
+              tenant_id: matchedUser.tenant_id
             },
             token: 'mock-jwt-token-testing-string', // eslint-disable-line no-secrets/no-secrets
             tenant: {
-              id: 'tenant-uuid-12345',
-              name: 'Agnes Demo Corp',
-              domain: 'demo'
+              id: matchedTenant?.id || 'unknown',
+              name: matchedTenant?.name || 'Unknown',
+              domain: matchedTenant?.domain || 'unknown'
             }
           });
         }, 1500); // 1.5s simulación

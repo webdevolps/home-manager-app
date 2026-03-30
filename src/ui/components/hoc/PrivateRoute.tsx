@@ -19,7 +19,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
   }
 
   if (!isAuthenticated) {
-    return <Navigate to={redirectTo} replace />;
+    return <Navigate to={redirectTo} state={{ requireLogin: true }} replace />;
   }
 
   return <>{children}</>;

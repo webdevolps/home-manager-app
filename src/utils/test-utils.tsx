@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from 'react'
 import { render } from '@testing-library/react'
 import type { RenderOptions } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import type { AppStore, RootState } from '@/store/store'
 import { configureStore } from '@reduxjs/toolkit'
@@ -11,6 +12,7 @@ import authReducer from '../store/auth/authSlice'
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: Partial<RootState>
   store?: AppStore
+  initialEntries?: string[] | { pathname: string; state?: any }[]
 }
 
 export function renderWithProviders(
@@ -30,7 +32,15 @@ export function renderWithProviders(
   }: ExtendedRenderOptions = {}
 ) {
   function Wrapper({ children }: PropsWithChildren): React.JSX.Element {
-    return <Provider store={store}>{children}</Provider>
+    return (
+      <Provider store={store}>
+        {renderOptions.initialEntries ? (
+           <MemoryRouter initialEntries={renderOptions.initialEntries as any[]}>{children}</MemoryRouter>
+        ) : (
+           <MemoryRouter>{children}</MemoryRouter>
+        )}
+      </Provider>
+    )
   }
   return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) }
 }

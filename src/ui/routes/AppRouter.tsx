@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import HomeApp from '@/ui/pages/HomeApp';
 import ExceptionPage from '@pages/exception';
 import PublicRoute from '@components/hoc/PublicRoute';
@@ -6,6 +6,7 @@ import PrivateRoute from '@components/hoc/PrivateRoute';
 
 import DashboardLayout from '@components/templates/DashboardLayout/DashboardLayout';
 import DashboardPage from '@pages/Dashboard/DashboardPage';
+import ManagementPage from '@pages/Management/ManagementPage';
 
 export const AppRoutes = () => {
   return (
@@ -18,6 +19,9 @@ export const AppRoutes = () => {
           </PublicRoute>
         } 
       />
+
+      {/* Redirect /login to / to prevent 404 */}
+      <Route path="/login" element={<Navigate to="/" replace />} />
       
       {/* Rutas Privadas del Dashboard */}
       <Route
@@ -29,7 +33,8 @@ export const AppRoutes = () => {
         }
       >
         <Route index element={<DashboardPage />} />
-        {/* Placeholder for Management and Legacy routes */}
+        <Route path="management" element={<ManagementPage />} />
+        {/* Placeholder for Legacy routes */}
       </Route>
 
       {/* Excepciones (Not Found) */}

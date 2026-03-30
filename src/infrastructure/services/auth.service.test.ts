@@ -29,12 +29,7 @@ vi.mock('../Api', () => {
 });
 
 describe('AuthService Layer', () => {
-  beforeEach(() => {
-    vi.useFakeTimers();
-  });
-
   afterEach(() => {
-    vi.useRealTimers();
     vi.clearAllMocks();
   });
 
@@ -42,13 +37,12 @@ describe('AuthService Layer', () => {
     // Forzamos MOCK=true
     vi.stubEnv('VITE_USE_MOCK', 'true');
 
-    const promise = AuthService.login({ email: 'klyswer@agnes.com' });
-    vi.advanceTimersByTime(1500); // Avance manual del tiempo para evitar demorar el testing
+    const promise = AuthService.login({ email: 'admin@agnes.com' });
     
     const response = await promise;
     expect(response.token).toContain('mock-jwt');
-    expect(response.tenant.id).toBe('tenant-uuid-12345');
-    expect(response.user.email).toBe('klyswer@agnes.com');
+    expect(response.tenant.id).toBe('tenant-agnes-101');
+    expect(response.user.email).toBe('admin@agnes.com');
     
     vi.unstubAllEnvs();
   });
