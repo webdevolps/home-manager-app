@@ -53,7 +53,7 @@ describe('SecureStorage', () => {
 
   it('getItem returns null if empty string is decrypted', () => {
     vi.spyOn(CryptoJS.AES, 'decrypt').mockImplementation(() => {
-      return { toString: () => '' } as any;
+      return { toString: () => '' } as unknown as CryptoJS.lib.WordArray;
     });
     localStorage.setItem(TEST_KEY, 'dummy-encrypted-data');
 
