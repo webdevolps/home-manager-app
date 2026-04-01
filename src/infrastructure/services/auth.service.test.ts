@@ -59,4 +59,20 @@ describe('AuthService Layer', () => {
 
     vi.unstubAllEnvs();
   });
+
+  it('Ejecuta login en modo MOCK y rechaza por error de red simulado', async () => {
+    vi.stubEnv('VITE_USE_MOCK', 'true');
+    await expect(AuthService.login({ email: 'error@agnes.com' }))
+      .rejects
+      .toThrow('Simulated network error for testing globalError UI');
+    vi.unstubAllEnvs();
+  });
+
+  it('Ejecuta login en modo MOCK y rechaza por credenciales inválidas', async () => {
+    vi.stubEnv('VITE_USE_MOCK', 'true');
+    await expect(AuthService.login({ email: 'notfound@agnes.com' }))
+      .rejects
+      .toThrow('Credenciales inválidas');
+    vi.unstubAllEnvs();
+  });
 });
