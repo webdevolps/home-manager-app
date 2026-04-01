@@ -13,7 +13,7 @@ describe('ExceptionPage', () => {
       </MemoryRouter>
     )
     expect(screen.getByText('404')).toBeInTheDocument()
-    expect(screen.getByText('Page not found')).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /Go back to Home/i })).toHaveAttribute('href', '/')
+    expect(screen.getByText('Página no encontrada')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /Volver al Inicio/i })).toBeInTheDocument()
   })
 })

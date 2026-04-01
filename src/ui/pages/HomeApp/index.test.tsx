@@ -7,7 +7,7 @@ import HomeApp from '@/ui/pages/HomeApp'
 describe('HomeApp Page', () => {
   it('renders title', () => {
     renderWithProviders(<HomeApp />)
-    expect(screen.getByRole('heading', { name: /^Home Manager$/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /^Agnes$/i })).toBeInTheDocument()
   })
 
   it('contains LoginForm for authentication', () => {

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import ApiImpl from '@/infrastructure/Api'
+import ApiImpl, { injectStore } from '@/infrastructure/Api'
 import axios from 'axios'
 import { store } from '@/store/store'
 import { logout } from '@/store/auth/authSlice'
@@ -31,6 +31,7 @@ vi.mock('axios', () => ({
 describe('ApiImpl', () => {
   const url = 'http://api.test/'
   const api = new ApiImpl({ url })
+  injectStore(store)
 
   it('creates entities and generates endpoints', () => {
     api.createEntity({ name: 'users' })

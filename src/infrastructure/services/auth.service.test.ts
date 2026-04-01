@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, afterEach, vi } from 'vitest';
 import { AuthService } from './auth.service';
 
 const { REAL_TENANT_ID, REAL_EMAIL } = vi.hoisted(() => ({

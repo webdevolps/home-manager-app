@@ -39,7 +39,7 @@ describe('Sidebar Organism', () => {
   it('renderiza la marca Agnes y los enlaces del menú', () => {
     render(
       <MemoryRouter>
-        <Sidebar />
+        <Sidebar isOpen={true} onClose={() => {}} />
       </MemoryRouter>
     );
 
@@ -54,7 +54,7 @@ describe('Sidebar Organism', () => {
   it('despacha el cierre de sesión y redirige al index al clickear el botón correspondiente', () => {
     render(
       <MemoryRouter>
-        <Sidebar />
+        <Sidebar isOpen={true} onClose={() => {}} />
       </MemoryRouter>
     );
 

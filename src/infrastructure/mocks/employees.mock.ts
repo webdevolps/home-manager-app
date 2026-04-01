@@ -7,6 +7,9 @@ export interface MockEmployee {
   tenant_id: string;
 }
 
+const TENANT_AGNES = 'tenant-agnes-101';
+const TENANT_CONSTRUCTORA = 'tenant-constructora-202';
+
 export const employeesMock: MockEmployee[] = [
   // Empleados de Agnes Demo Corp (tenant-agnes-101)
   {
@@ -15,7 +18,7 @@ export const employeesMock: MockEmployee[] = [
     email: 'rgomez@agnes.com',
     role: 'Employee',
     status: 'active',
-    tenant_id: 'tenant-agnes-101'
+    tenant_id: TENANT_AGNES
   },
   {
     id: 'emp-ag-002',
@@ -23,7 +26,7 @@ export const employeesMock: MockEmployee[] = [
     email: 'mdiaz@agnes.com',
     role: 'Manager',
     status: 'active',
-    tenant_id: 'tenant-agnes-101'
+    tenant_id: TENANT_AGNES
   },
   {
     id: 'emp-ag-003',
@@ -31,7 +34,7 @@ export const employeesMock: MockEmployee[] = [
     email: 'lsuarez@agnes.com',
     role: 'Employee',
     status: 'inactive',
-    tenant_id: 'tenant-agnes-101'
+    tenant_id: TENANT_AGNES
   },
   {
     id: 'emp-ag-004',
@@ -39,7 +42,7 @@ export const employeesMock: MockEmployee[] = [
     email: 'erobles@agnes.com',
     role: 'Employee',
     status: 'active',
-    tenant_id: 'tenant-agnes-101'
+    tenant_id: TENANT_AGNES
   },
   {
     id: 'emp-ag-005',
@@ -47,7 +50,7 @@ export const employeesMock: MockEmployee[] = [
     email: 'jpino@agnes.com',
     role: 'Admin',
     status: 'active',
-    tenant_id: 'tenant-agnes-101'
+    tenant_id: TENANT_AGNES
   },
   // Empleados de Constructora Beta (tenant-constructora-202)
   {
@@ -56,7 +59,7 @@ export const employeesMock: MockEmployee[] = [
     email: 'cmendoza@constructora.com',
     role: 'Director',
     status: 'active',
-    tenant_id: 'tenant-constructora-202'
+    tenant_id: TENANT_CONSTRUCTORA
   },
   {
     id: 'emp-cb-002',
@@ -64,7 +67,7 @@ export const employeesMock: MockEmployee[] = [
     email: 'atorres@constructora.com',
     role: 'Supervisor',
     status: 'active',
-    tenant_id: 'tenant-constructora-202'
+    tenant_id: TENANT_CONSTRUCTORA
   },
   {
     id: 'emp-cb-003',
@@ -72,7 +75,7 @@ export const employeesMock: MockEmployee[] = [
     email: 'dvaldes@constructora.com',
     role: 'Obrero',
     status: 'inactive',
-    tenant_id: 'tenant-constructora-202'
+    tenant_id: TENANT_CONSTRUCTORA
   },
   {
     id: 'emp-cb-004',
@@ -80,7 +83,7 @@ export const employeesMock: MockEmployee[] = [
     email: 'lvega@constructora.com',
     role: 'Logística',
     status: 'active',
-    tenant_id: 'tenant-constructora-202'
+    tenant_id: TENANT_CONSTRUCTORA
   },
   {
     id: 'emp-cb-005',
@@ -88,6 +91,6 @@ export const employeesMock: MockEmployee[] = [
     email: 'fsilva@constructora.com',
     role: 'Operador',
     status: 'active',
-    tenant_id: 'tenant-constructora-202'
+    tenant_id: TENANT_CONSTRUCTORA
   }
 ];

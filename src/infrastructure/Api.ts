@@ -1,6 +1,11 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import { store } from "@/store/store";
 import { logout } from "@/store/auth/authSlice";
+import type { Store } from "@reduxjs/toolkit";
+
+let injectedStore: Store;
+export const injectStore = (store: Store) => {
+  injectedStore = store;
+};
 
 export interface IEntity {
   name: string;
@@ -54,7 +59,7 @@ class ApiImpl implements IApi {
     
     // Interceptores de petición: Configura Token y Tenant-ID
     this.axiosInstance.interceptors.request.use((config) => {
-      const state = store.getState();
+      const state = injectedStore?.getState();
       const token = state?.auth?.token || localStorage.getItem('token');
       const tenantId = state?.auth?.currentTenantId;
 
@@ -73,8 +78,8 @@ class ApiImpl implements IApi {
     this.axiosInstance.interceptors.response.use(
       (response) => response,
       (error) => {
-        if (error.response?.status === 401) {
-          store.dispatch(logout());
+        if (error.response?.status === 401 && injectedStore) {
+          injectedStore.dispatch(logout());
         }
         return Promise.reject(error);
       }

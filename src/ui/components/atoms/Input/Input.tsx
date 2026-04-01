@@ -6,12 +6,12 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
 }
 
 const styles = {
-  wrapper: 'w-full flex flex-col gap-1.5',
-  label: 'text-sm font-medium text-gray-700',
-  inputBase: 'w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-200 disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed',
-  inputNormal: 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500/20 hover:border-gray-400',
-  inputError: 'border-red-500 text-red-900 placeholder-red-300 focus:border-red-500 focus:ring-red-500/20',
-  errorText: 'text-xs text-red-600',
+  wrapper: 'w-full flex flex-col gap-2',
+  label: 'text-sm font-bold text-slate-300 tracking-wide',
+  inputBase: 'w-full px-4 py-3 bg-slate-900/50 border rounded-xl focus:outline-none focus:ring-2 transition-all duration-300 disabled:bg-slate-800 disabled:text-slate-500 disabled:cursor-not-allowed',
+  inputNormal: 'border-slate-700 text-white placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500/30 hover:border-slate-500',
+  inputError: 'border-red-500/50 text-red-100 placeholder-red-400 focus:border-red-500 focus:ring-red-500/30 hover:border-red-500/80',
+  errorText: 'text-xs text-red-400 font-semibold mt-1 flex items-center gap-1',
 };
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(

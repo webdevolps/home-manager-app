@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import { UserService } from './user.service';
 
 const { EMPLOYEES_MOCK } = vi.hoisted(() => ({
@@ -35,7 +35,7 @@ describe('UserService', () => {
 
   it('fetch getEmployees en modo Mock filtra por tenant_id', async () => {
     vi.stubEnv('VITE_USE_MOCK', 'true');
-    const result = await UserService.getEmployees('t-1') as any[];
+    const result = await UserService.getEmployees('t-1');
 
     expect(result.length).toBe(1);
     expect(result[0].id).toBe('1');
@@ -44,7 +44,7 @@ describe('UserService', () => {
 
   it('toggleUserStatus en modo Mock cambia el estado simulado en memoria', async () => {
     vi.stubEnv('VITE_USE_MOCK', 'true');
-    const result = await UserService.toggleUserStatus('1', 'active') as { id: string, status: string };
+    const result = await UserService.toggleUserStatus('1', 'active');
 
     expect(result.id).toBe('1');
     expect(result.status).toBe('inactive');
@@ -53,14 +53,14 @@ describe('UserService', () => {
 
   it('fetch getEmployees en modo Real llama al ApiImpl configurado', async () => {
     vi.stubEnv('VITE_USE_MOCK', 'false');
-    const result = await UserService.getEmployees('t-real') as any[];
-    expect(result[0].id).toBe('api-1');
+    const result = await UserService.getEmployees('t-real');
+    expect((result as { id: string }[])[0].id).toBe('api-1');
     vi.unstubAllEnvs();
   });
 
   it('toggleUserStatus en modo Real llama update del ApiImpl', async () => {
     vi.stubEnv('VITE_USE_MOCK', 'false');
-    const result = await UserService.toggleUserStatus('api-1', 'active') as any;
+    const result = await UserService.toggleUserStatus('api-1', 'active') as { status: string };
     expect(result.status).toBe('inactive');
     vi.unstubAllEnvs();
   });

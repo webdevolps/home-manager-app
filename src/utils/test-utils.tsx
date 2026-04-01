@@ -12,7 +12,7 @@ import authReducer from '../store/auth/authSlice'
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: Partial<RootState>
   store?: AppStore
-  initialEntries?: string[] | { pathname: string; state?: any }[]
+  initialEntries?: string[] | { pathname: string; state?: unknown }[]
 }
 
 export function renderWithProviders(
@@ -35,7 +35,7 @@ export function renderWithProviders(
     return (
       <Provider store={store}>
         {renderOptions.initialEntries ? (
-           <MemoryRouter initialEntries={renderOptions.initialEntries as any[]}>{children}</MemoryRouter>
+           <MemoryRouter initialEntries={renderOptions.initialEntries as { pathname: string; state?: unknown }[]}>{children}</MemoryRouter>
         ) : (
            <MemoryRouter>{children}</MemoryRouter>
         )}

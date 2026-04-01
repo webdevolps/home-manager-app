@@ -21,7 +21,7 @@ describe('AppRouter', () => {
         </ModalProvider>
       </Provider>
     )
-    expect(screen.getByRole('heading', { name: /^Home Manager$/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /^Agnes$/i })).toBeInTheDocument()
   })
 
   it('renders ExceptionPage for unknown routes', () => {

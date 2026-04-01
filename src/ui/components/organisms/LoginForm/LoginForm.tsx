@@ -7,11 +7,11 @@ import { useAuth } from '../../../../hooks/useAuth';
 import { AuthService } from '../../../../infrastructure/services/auth.service';
 
 const styles = {
-  container: 'w-full max-w-sm mx-auto p-8 bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100/50',
-  title: 'text-2xl font-bold text-center text-gray-800 mb-6',
-  form: 'flex flex-col gap-4',
-  errorContainer: 'p-3 text-sm text-red-700 bg-red-50 rounded-lg flex items-center gap-2 font-medium',
-  submitButton: 'mt-2'
+  container: 'w-full max-w-[90vw] sm:max-w-sm mx-auto p-8 bg-slate-900/60 backdrop-blur-2xl rounded-3xl shadow-2xl shadow-black/40 border border-slate-700/50 transition-all duration-300',
+  title: 'text-3xl font-black text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400 mb-8',
+  form: 'flex flex-col gap-6',
+  errorContainer: 'p-4 text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center gap-3 font-semibold',
+  submitButton: 'mt-4 w-full h-12 text-lg font-bold rounded-xl shadow-[0_0_20px_rgba(79,70,229,0.3)] hover:shadow-[0_0_30px_rgba(79,70,229,0.5)] transition-shadow duration-300'
 };
 
 type LoginFormData = {

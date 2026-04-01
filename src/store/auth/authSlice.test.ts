@@ -59,7 +59,7 @@ describe('authSlice Redux State', () => {
       isAuthenticated: true,
     };
 
-    const actual = authReducer(loggedInState as any, logout());
+    const actual = authReducer(loggedInState as unknown as ReturnType<typeof authReducer>, logout());
 
     expect(actual).toEqual(initialState);
 

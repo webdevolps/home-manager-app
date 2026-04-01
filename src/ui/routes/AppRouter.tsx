@@ -6,7 +6,8 @@ import PrivateRoute from '@components/hoc/PrivateRoute';
 
 import DashboardLayout from '@components/templates/DashboardLayout/DashboardLayout';
 import DashboardPage from '@pages/Dashboard/DashboardPage';
-import ManagementPage from '@pages/Management/ManagementPage';
+import EmployeesPage from '@pages/Employees/EmployeesPage';
+import LegacyPlaceholder from '@pages/LegacyPlaceholder/LegacyPlaceholder';
 
 export const AppRoutes = () => {
   return (
@@ -33,8 +34,8 @@ export const AppRoutes = () => {
         }
       >
         <Route index element={<DashboardPage />} />
-        <Route path="management" element={<ManagementPage />} />
-        {/* Placeholder for Legacy routes */}
+        <Route path="management" element={<EmployeesPage />} />
+        <Route path="legacy/*" element={<LegacyPlaceholder />} />
       </Route>
 
       {/* Excepciones (Not Found) */}
